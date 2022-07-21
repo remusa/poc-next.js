@@ -30,20 +30,17 @@ jobs:
           ref: ${{ github.head_ref }}
           # This is important to fetch the changes to the previous commit
           fetch-depth: 0
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 6.32.9
       - name: Setup Node ${{ matrix.node_version }} on ${{ matrix.os }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node_version }}
-          cache: 'pnpm'
+          cache: 'npm'
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
       - name: Audit
-        run: pnpm audit
+        run: npm audit
       - name: Lint
-        run: pnpm lint
+        run: npm run lint
       - name: Format
         uses: creyD/prettier_action@v4.2
         with:
@@ -54,4 +51,6 @@ jobs:
       #   continue-on-error: true
       - name: Test
         # if: github.event_name == 'push' && github.ref == 'refs/heads/feat/grading-tool-ui_backend'
-        run: pnpm test
+        run: npm test
+      - name: Test components
+        run: npm run test:ct

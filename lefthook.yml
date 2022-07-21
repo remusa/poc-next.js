@@ -8,12 +8,10 @@ pre-commit:
     type-check:
       glob: '*.{ts,tsx}'
       run: npm run typecheck
-    eslint:
-      glob: '*.{js,jsx,ts,tsx}'
-      run: npm run lint {staged_files}
-    prettier:
-      glob: '*.{js,jsx,ts,tsx,css,html,json,yml,md}'
-      run: npm run format {staged_files}
+    lint:
+      run: npm run lint
+    format:
+      run: npm run prettier
 
 # commit-msg:
 #   parallel: true
@@ -30,17 +28,11 @@ pre-push:
       tags: security
       run: npm audit
     test:
-      files: git diff --name-only @{push}
-      glob: '*.{js,ts,jsx,tsx}'
-      run: npm run test -- run {staged_files}
-    test-playwright:
-      files: git diff --name-only @{push}
-      glob: '*.{js,ts,jsx,tsx}'
-      run: npm run test:playwright {staged_files}
-    test-component:
-      files: git diff --name-only @{push}
-      glob: '*.{js,ts,jsx,tsx}'
-      run: npm run test:component {staged_files}
+      run: npm run test -- run
+    test-components:
+      run: npm run test:ct
+    test-e2e:
+      run: npm run test:e2e
     fix:
       glob: '*.{js,ts,jsx,tsx,json,css,html,yml,md,mdx}'
       run: npm run fix && git add {staged_files}

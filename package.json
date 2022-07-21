@@ -10,15 +10,13 @@
     "post-update": "echo \"codesandbox preview only, need an update\" && npm upgrade --latest",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:integration": "playwright test",
     "test:e2e": "playwright test",
+    "test:ct": "playwright test -c playwright-ct.config.ts",
     "typecheck": "tsc --project tsconfig.json --noEmit --preserveWatchOutput",
-    "prettier": "prettier . --ignore-path .gitignore --loglevel=silent \"**/*.+(js|jsx|ts|tsx|json|css|html|md)\"",
-    "format:check": "npm run prettier -- --check",
-    "eslint": "eslint --ignore-path .gitignore --quiet --color .",
-    "check": "run-p typecheck prettier:check eslint",
+    "prettier": "prettier . --ignore-path .gitignore --loglevel=silent --check",
+    "check": "run-p typecheck lint prettier",
     "format": "npm run prettier -- --write",
-    "fix": "run-p format lint",
+    "fix": "run-p lint format",
     "commitlint": "npx --no -- commitlint --edit \"$1\""
   },
   "dependencies": {
@@ -35,6 +33,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
+    "@playwright/experimental-ct-react": "^1.23.4",
     "@playwright/test": "^1.23.4",
     "@types/node": "latest",
     "@types/react": "latest",
@@ -53,5 +52,10 @@
   "engineStrict": true,
   "engines": {
     "node": ">=16"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }

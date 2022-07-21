@@ -19,6 +19,7 @@ export default defineConfig({
     setupFiles: './tests/test-setup.ts',
     exclude: [
       ...configDefaults.exclude,
+      '**/*.spec.tsx', // Component tests
       'tests/**/*', // Playwright tests
     ],
   },
