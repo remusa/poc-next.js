@@ -13,7 +13,7 @@ export default defineConfig({
   plugins: [react()],
 
   test: {
-    globals: true, // use `describe, it, test` without importing them
+    globals: false, // use `describe, it, test` without importing them
     passWithNoTests: true,
     environment: 'jsdom',
     setupFiles: './tests/test-setup.ts',
