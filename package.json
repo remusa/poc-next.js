@@ -7,7 +7,19 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "post-update": "echo \"codesandbox preview only, need an update\" && pnpm upgrade --latest"
+    "post-update": "echo \"codesandbox preview only, need an update\" && npm upgrade --latest",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:playwright": "npx playwright test",
+    "test:component": "npx playwright test",
+    "typecheck": "tsc --project tsconfig.json --noEmit --preserveWatchOutput",
+    "prettier": "prettier . --ignore-path .gitignore --loglevel=silent \"**/*.+(js|jsx|ts|tsx|json|css|html|md)\"",
+    "format:check": "npm run prettier -- --check",
+    "eslint": "eslint --ignore-path .gitignore --quiet --color .",
+    "check": "run-p typecheck prettier:check eslint",
+    "format": "npm run prettier -- --write",
+    "fix": "run-p format lint",
+    "commitlint": "npx --no -- commitlint --edit \"$1\""
   },
   "dependencies": {
     "@emotion/cache": "latest",
@@ -21,11 +33,22 @@
     "react-dom": "latest"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@playwright/test": "^1.23.4",
     "@types/node": "latest",
     "@types/react": "latest",
-    "eslint": "latest",
+    "@vitejs/plugin-react": "^2.0.0",
+    "dotenv": "^16.0.1",
+    "eslint": "^8.20.0",
     "eslint-config-next": "latest",
-    "typescript": "latest"
+    "eslint-config-prettier": "^8.5.0",
+    "jsdom": "^20.0.0",
+    "lefthook": "^1.0.5",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4",
+    "vitest": "^0.18.1"
   },
   "engineStrict": true,
   "engines": {

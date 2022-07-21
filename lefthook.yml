@@ -1,0 +1,46 @@
+# EXAMPLE USAGE
+# Refer for explanation to following link:
+# https://github.com/evilmartians/lefthook/blob/master/docs/full_guide.md
+
+pre-commit:
+  parallel: true
+  commands:
+    type-check:
+      glob: '*.{ts,tsx}'
+      run: npm run typecheck
+    eslint:
+      glob: '*.{js,jsx,ts,tsx}'
+      run: npm run lint {staged_files}
+    prettier:
+      glob: '*.{js,jsx,ts,tsx,css,html,json,yml,md}'
+      run: npm run format {staged_files}
+
+# commit-msg:
+#   parallel: true
+#   commands:
+#     lint-commit-msg:
+#       run: npx --no -- commitlint --edit "$1"
+
+pre-push:
+  parallel: true
+  commands:
+    # lslint:
+    #   run: npm run lslint
+    packages-audit:
+      tags: security
+      run: npm audit
+    test:
+      files: git diff --name-only @{push}
+      glob: '*.{js,ts,jsx,tsx}'
+      run: npm run test -- run {staged_files}
+    test-playwright:
+      files: git diff --name-only @{push}
+      glob: '*.{js,ts,jsx,tsx}'
+      run: npm run test:playwright {staged_files}
+    test-component:
+      files: git diff --name-only @{push}
+      glob: '*.{js,ts,jsx,tsx}'
+      run: npm run test:component {staged_files}
+    fix:
+      glob: '*.{js,ts,jsx,tsx,json,css,html,yml,md,mdx}'
+      run: npm run fix && git add {staged_files}
