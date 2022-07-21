@@ -1,10 +1,10 @@
+import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import type { NextPage } from 'next'
-import Copyright from '../src/Copyright'
+import Dashboard from '../src/dashboard/Dashboard'
 import Link from '../src/Link'
-import ProTip from '../src/ProTip'
 
 const Home: NextPage = () => {
   return (
@@ -19,16 +19,14 @@ const Home: NextPage = () => {
         }}
       >
         <Typography variant="h4" component="h1" gutterBottom>
-          MUI v5 + Next.js with TypeScript example
+          Dashboard
         </Typography>
-        <Link href="/about" color="secondary">
-          Go to the about page
-        </Link>
-        <Link href="/dashboard" color="secondary">
-          Go to the dashboard page
-        </Link>
-        <ProTip />
-        <Copyright />
+        <Box maxWidth="sm">
+          <Button variant="contained" component={Link} noLinkStyle href="/">
+            Go to the home page
+          </Button>
+        </Box>
+        <Dashboard />
       </Box>
     </Container>
   )
