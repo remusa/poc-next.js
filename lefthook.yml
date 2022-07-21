@@ -10,14 +10,14 @@ pre-commit:
       run: npm run typecheck
     lint:
       run: npm run lint
-    format:
+    check-format:
       run: npm run prettier
 
 commit-msg:
   parallel: true
   commands:
     lint-commit-msg:
-      run: npx commitlint --from HEAD~1 --to HEAD --verbose
+      run: npm run commitlint
 
 pre-push:
   parallel: true
@@ -28,7 +28,7 @@ pre-push:
       tags: security
       run: npm audit
     test:
-      run: npm run test -- run
+      run: npm run test:run
     test-components:
       run: npm run test:ct
     test-e2e:
