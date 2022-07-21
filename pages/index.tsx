@@ -22,10 +22,16 @@ const Home: NextPage = () => {
           MUI v5 + Next.js with TypeScript example
         </Typography>
         <Link href="/about" color="secondary">
-          Go to the about page
+          About
         </Link>
         <Link href="/dashboard" color="secondary">
-          Go to the dashboard page
+          Dashboard
+        </Link>
+        <Link href="/sign-up" color="secondary">
+          Sign Up
+        </Link>
+        <Link href="/sign-in" color="secondary">
+          Sign In
         </Link>
         <ProTip />
         <Copyright />
