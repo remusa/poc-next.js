@@ -33,6 +33,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.1",
     "next": "^12.2.2",
+    "phoenix": "^1.6.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "recharts": "^2.1.12"
@@ -43,6 +44,7 @@
     "@playwright/experimental-ct-react": "^1.23.4",
     "@playwright/test": "^1.23.4",
     "@types/node": "^18.0.6",
+    "@types/phoenix": "^1.5.4",
     "@types/react": "^18.0.15",
     "@vitejs/plugin-react": "^2.0.0",
     "cross-env": "^7.0.3",
