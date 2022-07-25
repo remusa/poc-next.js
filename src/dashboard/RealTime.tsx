@@ -9,15 +9,14 @@ import * as React from 'react'
 import { useChannel } from '../hooks/use-channel'
 import Title from './Title'
 
-if (typeof window !== 'undefined') {
-  // TODO: save current user to window object to authenticate
-  window.currentUser = {
-    email: 'test@zubale.com',
-    id: 'test',
-  }
-}
-
 const topic = `userupdates:lobby`
+
+type TState = {
+  id: number
+  timestamp: number
+  event: string
+  reply: string
+}
 
 type TUpdate = {
   id: number
@@ -27,13 +26,25 @@ type TUpdate = {
 }
 
 const crudEvents = ['create', 'update', 'delete']
+const ms = 3000
 
 export default function RealTime() {
-  const [state, setState] = React.useState<TUpdate[]>([])
+  const [state, setState] = React.useState<TState[]>([])
+  const [updates, setUpdates] = React.useState<TUpdate[]>([])
 
   const onChannelMessage = React.useCallback((event: string, payload: any) => {
-    if (crudEvents.includes(event)) {
+    if (event === 'phx_reply' && payload.status === 'ok') {
+      const res = Object.entries(payload.response)?.at(0)
+      if (!res) return
       setState((prev) => {
+        const id = prev.length + 1
+        const [event, reply] = res
+        const newItem = { id, timestamp: Date.now(), event, reply } as TState
+        return [...prev, newItem]
+      })
+    }
+    if (crudEvents.includes(event)) {
+      setUpdates((prev) => {
         const id = prev.length + 1
         const newItem = { id, event, ...payload } as TUpdate
         return [...prev, newItem]
@@ -43,17 +54,23 @@ export default function RealTime() {
 
   const broadcast = useChannel(topic, onChannelMessage)
 
-  const onSend = React.useCallback(() => {
-    broadcast(topic, { payload: 'message' })
-  }, [broadcast])
+  const send = React.useCallback(
+    (event: string, payload: any) => {
+      broadcast(event, payload)
+    },
+    [broadcast],
+  )
 
   React.useEffect(() => {
-    onSend()
-  }, [broadcast, onSend])
+    const timer = setInterval(() => {
+      send('ping', { ping: 'pong' })
+    }, ms)
+    return () => clearInterval(timer)
+  }, [send])
 
   return (
     <React.Fragment>
-      <Title>Real Time User Updated</Title>
+      <Title>Real Time User Updates</Title>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="user updates table">
           <TableHead>
@@ -65,7 +82,7 @@ export default function RealTime() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {state.map((row) => (
+            {updates.map((row) => (
               <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
                   {row.id}
@@ -73,6 +90,32 @@ export default function RealTime() {
                 <TableCell>{row.event}</TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.age}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Title>Real Time Ping Pong ({ms / 1000}s. interval)</Title>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650, maxHeight: 250 }} size="small" aria-label="events table">
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Timestamp</TableCell>
+              <TableCell>Event</TableCell>
+              <TableCell>Reply</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {state.map((row) => (
+              <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row">
+                  {row.id}
+                </TableCell>
+                <TableCell>{row.timestamp}</TableCell>
+                <TableCell>{row.event}</TableCell>
+                <TableCell>{row.reply}</TableCell>
               </TableRow>
             ))}
           </TableBody>
