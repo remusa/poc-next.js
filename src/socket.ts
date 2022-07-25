@@ -1,6 +1,6 @@
 import { Socket } from 'phoenix'
 
-const url = process.env.NEXT_PUBLIC_SOCKET_URL || 'ws://localhost:4000/socket'
+const url = process.env.NEXT_PUBLIC_SOCKET_URL
 
 if (typeof window !== 'undefined') {
   // TODO: save current user to window object to authenticate
