@@ -4,14 +4,17 @@ const url = process.env.NEXT_PUBLIC_SOCKET_URL || 'ws://localhost:4000/socket'
 
 if (typeof window !== 'undefined') {
   // TODO: save current user to window object to authenticate
-  // window.currentUser = {
-  //   email: 'test@zubale.com',
-  //   id: 'test',
-  // }
+  // @ts-ignore
+  window.currentUser = {
+    email: 'test@zubale.com',
+    id: 'test',
+  }
 }
 
 function initializeSocket() {
-  if (typeof window === 'undefined') return null
+  if (typeof window === 'undefined') {
+    return null
+  }
 
   return new Socket(url, {
     // TODO: pass optional params for authentication and other purposes on the side of Phoenix

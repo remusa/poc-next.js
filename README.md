@@ -1,15 +1,14 @@
-# Next.js with TypeScript example
+[![CI (assets)](https://github.com/remusa/poc-next.js/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/remusa/poc-next.js/actions/workflows/ci.yml)
+[![Lint Commit Messages](https://github.com/remusa/poc-next.js/actions/workflows/commitlint.yml/badge.svg?branch=master)](https://github.com/remusa/poc-next.js/actions/workflows/commitlint.yml)
+[![Playwright Tests](https://github.com/remusa/poc-next.js/actions/workflows/playwright.yml/badge.svg?branch=master)](https://github.com/remusa/poc-next.js/actions/workflows/playwright.yml)
+[![GitHub Actions Vercel Production Deployment](https://github.com/remusa/poc-next.js/actions/workflows/cd.yml/badge.svg?branch=master)](https://github.com/remusa/poc-next.js/actions/workflows/cd.yml)
+[![GitHub Actions Vercel Preview Deployment](https://github.com/remusa/poc-next.js/actions/workflows/cd-preview.yml/badge.svg)](https://github.com/remusa/poc-next.js/actions/workflows/cd-preview.yml)
+
+# Next.js PoC
 
 ## How to use
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
-
-<!-- #default-branch-switch -->
-
-```sh
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/nextjs-with-typescript
-cd nextjs-with-typescript
-```
+Download or clone the repo.
 
 Install it and run:
 
@@ -18,44 +17,31 @@ npm install
 npm run dev
 ```
 
-or:
+## CI
 
-<!-- #default-branch-switch -->
-
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/nextjs-with-typescript)
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mui/material-ui/tree/master/examples/nextjs-with-typescript)
-
-## The idea behind the example
-
-The project uses [Next.js](https://github.com/vercel/next.js), which is a framework for server-rendered React apps.
-It includes `@mui/material` and its peer dependencies, including `emotion`, the default style engine in MUI v5. If you prefer, you can [use styled-components instead](https://mui.com/material-ui/guides/interoperability/#styled-components).
-
-## The link component
-
-Next.js has [a custom Link component](https://nextjs.org/docs/api-reference/next/link).
-The example folder provides adapters for usage with MUI.
-More information [in the documentation](https://mui.com/material-ui/guides/routing/#next-js).
-
-## What's next?
-
-<!-- #default-branch-switch -->
-
-You now have a working example project.
-You can head back to the documentation, continuing browsing it from the [templates](https://mui.com/material-ui/getting-started/templates/) section.
-
-## Testing
-
-- Unit testing: Vitest
-- Integration testing: Playwright
-- E2E testing: Playwright
+- Checks that commits respect the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+- Run tests, linting, formatting and security audit.
 
 ## Git hooks
 
-- Uses `lefthook` for git hooks.
+- Configured using [lefthook](https://github.com/evilmartians/lefthook).
+
+- Test git hooks locally:
 
 ```bash
 npx lefthook run pre-commit
 npx lefthook run commit-msg
 npx lefthook run pre-push
 ```
+
+## Testing
+
+- Unit tests: Vitest
+- Integration tests: Playwright component testing (on Chromium, Firefox and Webkit/Safari).
+- [E2E tests](./tests/e2e): Playwright (on Chromium, Firefox and Webkit/Safari).
+
+## Deployment
+
+- Deployment to Vercel via GitHub Actions.
+  - Production environment on pushes to `master`.
+  - Preview deployments on pushes elsewhere.
