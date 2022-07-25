@@ -4,7 +4,7 @@ test.describe('dashboard', () => {
   test('test', async ({ page }) => {
     await page.goto('http://localhost:3000/')
     await expect(page).toHaveURL('http://localhost:3000/')
-    await page.locator('text=Go to the dashboard page').click()
+    await page.locator('text=dashboard').click()
     await expect(page).toHaveURL('http://localhost:3000/dashboard')
     await expect(page.locator('text=Dashboard4 >> h1')).toBeVisible()
     await expect(page.locator('button:has-text("4")')).toBeVisible()
