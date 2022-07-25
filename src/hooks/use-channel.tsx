@@ -35,7 +35,7 @@ function joinChannel(socket: Socket, channelTopic: string, onMessage: OnMessage,
     .receive('ok', (res) => console.log('successfully joined channel', res?.messages ?? ''))
     .receive('error', (err) => console.error('failed to join channel', err?.reason))
 
-  setBroadcast((prevState: any) => (eventName: string, payload: any) => channel.push(eventName, payload))
+  setBroadcast((_prevState: any) => (eventName: string, payload: any) => channel.push(eventName, payload))
 
   return () => {
     channel.leave()
