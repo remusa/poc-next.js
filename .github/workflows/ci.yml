@@ -1,12 +1,13 @@
 name: CI
 on:
   push:
+    branches: [master, develop, renovate/**]
     paths:
       - '**'
       - '!**.md'
       - '!**.json'
   pull_request:
-    branches: [master, develop]
+    branches: [master, develop, renovate/**]
     paths:
       - '**'
       - '!**.md'

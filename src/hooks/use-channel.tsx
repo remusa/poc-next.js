@@ -22,11 +22,11 @@ function joinChannel(socket: Socket, channelTopic: string, onMessage: OnMessage,
   const channel = socket.channel(channelTopic, { client: 'browser' })
 
   channel.onMessage = (event, payload) => {
-    // I don't think the chan_reply_ events are needed - always duplicates.
+    // Ignore events that start with "chan_reply_"
     if (event != null && !event.startsWith('chan_reply_')) {
       onMessage(event, payload)
     }
-    // Return the payload since we're using the special onMessage hook
+    // Return the payload to use on the onMessage hook
     return payload
   }
 

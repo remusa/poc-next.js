@@ -24,15 +24,17 @@ npm run dev
 
 ## Git hooks
 
-- Configured using [lefthook](https://github.com/evilmartians/lefthook).
-
-- Test git hooks locally:
+- Test git hooks from [local config](./lefthook.yml):
 
 ```bash
 npx lefthook run pre-commit
 npx lefthook run commit-msg
 npx lefthook run pre-push
 ```
+
+## Renovate
+
+- Setup Renovate to handle dependencies updates, etc.
 
 ## Testing
 
