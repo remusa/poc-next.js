@@ -84,7 +84,9 @@ function DashboardContent() {
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
+
           <Divider />
+
           <List component="nav">
             {mainListItems}
             <Divider sx={{ my: 1 }} />

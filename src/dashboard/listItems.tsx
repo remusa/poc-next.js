@@ -7,6 +7,7 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import ListSubheader from '@mui/material/ListSubheader'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import * as React from 'react'
 
 type Props = {
@@ -16,9 +17,10 @@ type Props = {
 }
 
 function MenuLink({ path, text, icon = null }: Props) {
+  const router = useRouter()
   return (
     <Link href={path}>
-      <ListItemButton>
+      <ListItemButton selected={router.pathname === path}>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={text} />
       </ListItemButton>
