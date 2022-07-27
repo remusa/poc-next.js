@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/experimental-ct-react'
+
 import Copyright from './Copyright'
 
 test.use({ viewport: { width: 500, height: 500 } })

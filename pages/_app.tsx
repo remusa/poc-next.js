@@ -3,6 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+
 import createEmotionCache from '../src/createEmotionCache'
 import theme from '../src/theme'
 

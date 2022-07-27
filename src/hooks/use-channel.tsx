@@ -1,5 +1,6 @@
 import { Socket } from 'phoenix'
 import * as React from 'react'
+
 import socket from '../socket'
 
 type OnMessage = (eventName: string, payload: any) => void

@@ -2,6 +2,7 @@ import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import type { NextPage } from 'next'
+
 import SignUp from '../src/auth/SignUp'
 import Link from '../src/Link'
 

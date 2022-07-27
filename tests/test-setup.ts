@@ -1,4 +1,5 @@
 import { afterAll, afterEach, beforeAll } from 'vitest'
+
 import { server } from '../mocks/server'
 
 // Start server before all tests
@@ -16,4 +17,4 @@ afterEach(async () => {
   await Promise.all([])
 })
 
-export { }
+export {}
