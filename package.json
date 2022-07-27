@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "post-update": "echo \"codesandbox preview only, need an update\" && npm upgrade --latest",
+    "setup": "npx rimraf node_modules/ && npx rimraf .next/ && npm i",
     "test": "npx vitest",
     "test:run": "npx vitest run",
     "test:coverage": "npx vitest run --coverage",
@@ -23,7 +24,9 @@
     "format": "npm run prettier -- --write",
     "fix": "run-p lint format",
     "commitlint": "npx commitlint --edit --verbose",
-    "commitlint:last": "npx commitlint --from HEAD~1 --to HEAD --verbose"
+    "commitlint:last": "npx commitlint --from HEAD~1 --to HEAD --verbose",
+    "deploy:preview": "vercel deploy",
+    "deploy": "vercel deploy --prod"
   },
   "dependencies": {
     "@emotion/cache": "^11.9.3",
@@ -36,7 +39,7 @@
     "phoenix": "^1.6.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "recharts": "2.1.13"
+    "recharts": "2.1.12"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
