@@ -1,7 +1,9 @@
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import DashboardIcon from '@mui/icons-material/Dashboard'
+import HomeIcon from '@mui/icons-material/Home'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import Divider from '@mui/material/Divider'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
@@ -30,11 +32,27 @@ function MenuLink({ path, text, icon = null }: Props) {
 
 export const mainListItems = (
   <React.Fragment>
+    <ListSubheader component="div" inset>
+      Home
+    </ListSubheader>
+    <MenuLink path="/" text="Home" icon={<HomeIcon />} />
+
+    <Divider />
+
+    <ListSubheader component="div" inset>
+      Dashboard
+    </ListSubheader>
     <MenuLink path="/dashboard" text="Dashboard" icon={<DashboardIcon />} />
+
+    <Divider />
+
     <ListSubheader component="div" inset>
       Submissions
     </ListSubheader>
     <MenuLink path="/submissions" text="Submissions" icon={<ShoppingCartIcon />} />
+
+    <Divider />
+
     <ListSubheader component="div" inset>
       Reviewed
     </ListSubheader>

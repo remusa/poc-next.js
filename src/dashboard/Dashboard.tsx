@@ -1,7 +1,6 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import MenuIcon from '@mui/icons-material/Menu'
 import NotificationsIcon from '@mui/icons-material/Notifications'
-import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
 import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -11,25 +10,18 @@ import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import List from '@mui/material/List'
 import Paper from '@mui/material/Paper'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
 
 import { AppBar, Drawer } from '../appbar/AppBar'
 import Copyright from '../Copyright'
+import theme from '../theme'
 import Chart from './Chart'
 import { mainListItems, secondaryListItems } from './listItems'
 import RealTime from './RealTime'
 import Submissions from './Submissions'
-
-export const drawerWidth: number = 240
-
-export interface AppBarProps extends MuiAppBarProps {
-  open?: boolean
-}
-
-const mdTheme = createTheme()
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true)
@@ -39,7 +31,7 @@ function DashboardContent() {
   }
 
   return (
-    <ThemeProvider theme={mdTheme}>
+    <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>

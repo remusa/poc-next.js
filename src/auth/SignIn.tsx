@@ -17,9 +17,8 @@ import Typography from '@mui/material/Typography'
 import * as React from 'react'
 
 import Copyright from '../Copyright'
+import theme from '../theme'
 import { Alert } from './SignUp'
-
-const theme = createTheme()
 
 export default function SignIn() {
   const [open, setOpen] = React.useState(false)

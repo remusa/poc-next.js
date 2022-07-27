@@ -18,12 +18,11 @@ import Typography from '@mui/material/Typography'
 import * as React from 'react'
 
 import Copyright from '../Copyright'
+import theme from '../theme'
 
 export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
-
-const theme = createTheme()
 
 export default function SignUp() {
   const [open, setOpen] = React.useState(false)
