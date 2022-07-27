@@ -20,7 +20,7 @@ import * as React from 'react'
 import Chart from './Chart'
 import Deposits from './Deposits'
 import { mainListItems, secondaryListItems } from './listItems'
-import Orders from './Orders'
+import Submissions from './Submissions'
 import RealTime from './RealTime'
 
 function Copyright(props: any) {
@@ -187,7 +187,7 @@ function DashboardContent() {
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
+                  <Submissions />
                 </Paper>
               </Grid>
               <Grid item xs={12}>

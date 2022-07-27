@@ -26,7 +26,7 @@ type TUpdate = {
 }
 
 const crudEvents = ['create', 'update', 'delete']
-const ms = 3000
+const ms = 10_000
 
 export default function RealTime() {
   const [state, setState] = React.useState<TState[]>([])
