@@ -40,7 +40,7 @@ export type Submission = {
   modifiedOn: string
 }
 
-export default function Submissions(props) {
+export default function Submissions() {
   const [reviews, setReviews] = React.useState<Submission[]>([])
 
   const handleGetSubmissions = () => {

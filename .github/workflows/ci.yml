@@ -45,7 +45,7 @@ jobs:
       - name: Format
         uses: creyD/prettier_action@v4.2
         with:
-          prettier_options: --loglevel=silent **/*.+(js|jsx|ts|tsx|json|css)
+          prettier_options: --loglevel=silent **/*.+(js|jsx|ts|tsx|json|css) --write --ignore-path .prettierignore
           only_changed: True
           same_commit: True
       #   run: npm run check:lint

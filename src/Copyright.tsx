@@ -2,9 +2,9 @@ import MuiLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
 
-export default function Copyright() {
+export default function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <MuiLink color="inherit" href="https://mui.com/">
         Your Website

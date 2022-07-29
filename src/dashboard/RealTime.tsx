@@ -77,7 +77,7 @@ export default function RealTime() {
 
   const broadcastSub = useChannel('submissions:lobby', onChannelMessageSubmission)
 
-  const send = React.useCallback((event: string, payload: any, callback) => {
+  const send = React.useCallback((event: string, payload: any, callback: any) => {
     callback(event, payload)
   }, [])
 
