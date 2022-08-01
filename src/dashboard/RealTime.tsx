@@ -24,7 +24,7 @@ type TUpdate = {
   age: number
 }
 
-type TTask = {
+export type TTask = {
   brand: string
   country: string
   retailer: string
@@ -37,9 +37,13 @@ type TTask = {
 }
 
 const crudEvents = ['create', 'update', 'delete']
+const ms = 10_000
+
+export function send(event: string, payload: any, callback: any) {
+  callback(event, payload)
+}
 
 export default function RealTime() {
-  const ms = 10_000
   const [state, setState] = React.useState<TState[]>([])
   const [updates, setUpdates] = React.useState<TUpdate[]>([])
   const [tasks, setTasks] = React.useState<TTask[]>([])
@@ -77,22 +81,40 @@ export default function RealTime() {
 
   const broadcastSub = useChannel('submissions:lobby', onChannelMessageSubmission)
 
-  const send = React.useCallback((event: string, payload: any, callback: any) => {
-    callback(event, payload)
-  }, [])
-
   React.useEffect(() => {
     const timer = setInterval(() => {
       send('ping', { ping: 'pong' }, broadcast)
     }, ms)
     return () => clearInterval(timer)
-  }, [broadcast, send])
+  }, [broadcast])
 
   return (
     <React.Fragment>
+      <RealTimeSubmissions rows={tasks} />
+
+      <RealTimeUserUpdates rows={updates} />
+
+      <RealTimePingPong rows={state} />
+    </React.Fragment>
+  )
+}
+
+type RealTimeSubmissionsProps = {
+  rows: TTask[]
+}
+
+export function RealTimeSubmissions({ rows }: RealTimeSubmissionsProps) {
+  return (
+    <>
       <Title>Real Time Submissions</Title>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="submissions table">
+        <Table
+          sx={{
+            minWidth: 650,
+          }}
+          size="small"
+          aria-label="submissions table"
+        >
           <TableHead>
             submissions
             <TableRow>
@@ -107,8 +129,15 @@ export default function RealTime() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tasks.map((row) => (
-              <TableRow key={row.task_id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            {rows.map((row) => (
+              <TableRow
+                key={row.task_id}
+                sx={{
+                  '&:last-child td, &:last-child th': {
+                    border: 0,
+                  },
+                }}
+              >
                 <TableCell component="th" scope="row">
                   {row.task_id}
                 </TableCell>
@@ -117,16 +146,33 @@ export default function RealTime() {
                 <TableCell>{row.brand}</TableCell>
                 <TableCell>{row.retailer}</TableCell>
                 <TableCell>{row.country}</TableCell>
+                <TableCell>{Date.now()}</TableCell>
                 <TableCell>{row.soft_reject}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+    </>
+  )
+}
 
+type RealTimeUserUpdatesProps = {
+  rows: TUpdate[]
+}
+
+export function RealTimeUserUpdates({ rows }: RealTimeUserUpdatesProps) {
+  return (
+    <>
       <Title>Real Time User Updates</Title>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="user updates table">
+        <Table
+          sx={{
+            minWidth: 650,
+          }}
+          size="small"
+          aria-label="user updates table"
+        >
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
@@ -136,8 +182,15 @@ export default function RealTime() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {updates.map((row) => (
-              <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            {rows.map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{
+                  '&:last-child td, &:last-child th': {
+                    border: 0,
+                  },
+                }}
+              >
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
@@ -149,10 +202,27 @@ export default function RealTime() {
           </TableBody>
         </Table>
       </TableContainer>
+    </>
+  )
+}
 
+type RealTimePingPong = {
+  rows: TState[]
+}
+
+export function RealTimePingPong({ rows }: RealTimePingPong) {
+  return (
+    <>
       <Title>Real Time Ping Pong ({ms / 1000}s. interval)</Title>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650, maxHeight: 250 }} size="small" aria-label="events table">
+        <Table
+          sx={{
+            minWidth: 650,
+            maxHeight: 250,
+          }}
+          size="small"
+          aria-label="events table"
+        >
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
@@ -162,8 +232,15 @@ export default function RealTime() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {state.map((row) => (
-              <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            {rows.map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{
+                  '&:last-child td, &:last-child th': {
+                    border: 0,
+                  },
+                }}
+              >
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
@@ -175,6 +252,6 @@ export default function RealTime() {
           </TableBody>
         </Table>
       </TableContainer>
-    </React.Fragment>
+    </>
   )
 }
