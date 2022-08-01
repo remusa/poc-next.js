@@ -1,4 +1,20 @@
 {
   "root": true,
-  "extends": ["next", "prettier"]
+  "extends": ["next", "prettier"],
+  "plugins": ["simple-import-sort", "import"],
+  "rules": {
+    "prefer-const": "warn",
+    // "no-console": "warn",
+    "react/jsx-no-leaked-render": [
+      "warn",
+      {
+        "validStrategies": ["ternary", "coerce"]
+      }
+    ],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error"
+  }
 }

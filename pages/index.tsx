@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import type { NextPage } from 'next'
+
 import Copyright from '../src/Copyright'
 import Link from '../src/Link'
 import ProTip from '../src/ProTip'

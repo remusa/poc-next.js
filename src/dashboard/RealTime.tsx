@@ -6,10 +6,9 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import * as React from 'react'
+
 import { useChannel } from '../hooks/use-channel'
 import Title from './Title'
-
-const topic = `userupdates:lobby`
 
 type TState = {
   id: number
@@ -25,12 +24,25 @@ type TUpdate = {
   age: number
 }
 
+type TTask = {
+  brand: string
+  country: string
+  retailer: string
+  review: boolean
+  score: number
+  soft_reject: string
+  status: string
+  task_id: string
+  user_phone: string
+}
+
 const crudEvents = ['create', 'update', 'delete']
-const ms = 3000
 
 export default function RealTime() {
+  const ms = 10_000
   const [state, setState] = React.useState<TState[]>([])
   const [updates, setUpdates] = React.useState<TUpdate[]>([])
+  const [tasks, setTasks] = React.useState<TTask[]>([])
 
   const onChannelMessage = React.useCallback((event: string, payload: any) => {
     if (event === 'phx_reply' && payload.status === 'ok') {
@@ -52,24 +64,66 @@ export default function RealTime() {
     }
   }, [])
 
-  const broadcast = useChannel(topic, onChannelMessage)
+  const broadcast = useChannel('userupdates:lobby', onChannelMessage)
 
-  const send = React.useCallback(
-    (event: string, payload: any) => {
-      broadcast(event, payload)
-    },
-    [broadcast],
-  )
+  const onChannelMessageSubmission = React.useCallback((event: string, payload: any) => {
+    if (event === 'phx_reply' && payload.status === 'ok') {
+      setTasks(payload.response)
+    }
+    if (crudEvents.includes(event)) {
+      console.log(`🚀 ~ onChannelMessageSubmission ~ payload`, payload)
+    }
+  }, [])
+
+  const broadcastSub = useChannel('submissions:lobby', onChannelMessageSubmission)
+
+  const send = React.useCallback((event: string, payload: any, callback: any) => {
+    callback(event, payload)
+  }, [])
 
   React.useEffect(() => {
     const timer = setInterval(() => {
-      send('ping', { ping: 'pong' })
+      send('ping', { ping: 'pong' }, broadcast)
     }, ms)
     return () => clearInterval(timer)
-  }, [send])
+  }, [broadcast, send])
 
   return (
     <React.Fragment>
+      <Title>Real Time Submissions</Title>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="submissions table">
+          <TableHead>
+            submissions
+            <TableRow>
+              <TableCell>Task ID</TableCell>
+              <TableCell>User Phone</TableCell>
+              <TableCell>Score</TableCell>
+              <TableCell>Brand</TableCell>
+              <TableCell>Retailer</TableCell>
+              <TableCell>Country</TableCell>
+              <TableCell>Date Added</TableCell>
+              <TableCell>Soft-Rejected?</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {tasks.map((row) => (
+              <TableRow key={row.task_id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row">
+                  {row.task_id}
+                </TableCell>
+                <TableCell>{row.user_phone}</TableCell>
+                <TableCell>{row.score}</TableCell>
+                <TableCell>{row.brand}</TableCell>
+                <TableCell>{row.retailer}</TableCell>
+                <TableCell>{row.country}</TableCell>
+                <TableCell>{row.soft_reject}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
       <Title>Real Time User Updates</Title>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="user updates table">
@@ -89,7 +143,7 @@ export default function RealTime() {
                 </TableCell>
                 <TableCell>{row.event}</TableCell>
                 <TableCell>{row.name}</TableCell>
-                <TableCell>{row.age}</TableCell>
+                <TableCell>{row.age}tasks</TableCell>
               </TableRow>
             ))}
           </TableBody>

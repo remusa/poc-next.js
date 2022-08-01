@@ -15,22 +15,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
+
+import Copyright from '../Copyright'
+import theme from '../theme'
 import { Alert } from './SignUp'
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
-
-const theme = createTheme()
 
 export default function SignIn() {
   const [open, setOpen] = React.useState(false)
