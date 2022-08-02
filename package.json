@@ -31,7 +31,7 @@
     "deploy": "vercel deploy --prod"
   },
   "dependencies": {
-    "@emotion/cache": "11.10.0",
+    "@emotion/cache": "11.10.1",
     "@emotion/react": "11.10.0",
     "@emotion/server": "11.10.0",
     "@emotion/styled": "11.10.0",
