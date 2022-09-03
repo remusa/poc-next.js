@@ -60,7 +60,7 @@
     "eslint-config-next": "12.2.5",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-simple-import-sort": "7.0.0",
+    "eslint-plugin-simple-import-sort": "8.0.0",
     "jsdom": "20.0.0",
     "lefthook": "1.1.1",
     "msw": "0.45.0",
