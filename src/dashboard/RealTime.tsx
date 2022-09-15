@@ -59,24 +59,38 @@ export default function RealTime() {
         return [...prev, newItem]
       })
     }
-    if (crudEvents.includes(event)) {
-      setUpdates((prev) => {
-        const id = prev.length + 1
-        const newItem = { id, event, ...payload } as TUpdate
-        return [...prev, newItem]
-      })
-    }
+    if (!crudEvents.includes(event)) return
+    setUpdates((prev) => {
+      const id = prev.length + 1
+      const newItem = { id, event, ...payload } as TUpdate
+      return [...prev, newItem]
+    })
   }, [])
 
   const broadcast = useChannel('userupdates:lobby', onChannelMessage)
 
   const onChannelMessageSubmission = React.useCallback((event: string, payload: any) => {
-    if (event === 'phx_reply' && payload.status === 'ok') {
+    if (event === 'phx_reply' && tasks.length === 0) {
       setTasks(payload.response)
     }
-    if (crudEvents.includes(event)) {
-      console.log(`🚀 ~ onChannelMessageSubmission ~ payload`, payload)
+    if (event === 'create') {
+      setTasks((prev) => prev.concat(payload))
     }
+    if (event === 'update') {
+      setTasks((prev) => {
+        const taskIdx = prev.findIndex((item) => item.task_id === payload.task_id)
+        const copy = [...prev]
+        copy[taskIdx] = payload
+        return copy
+      })
+    }
+    if (event === 'delete') {
+      setTasks((prev) => {
+        const updatedTasks = prev.filter((item) => item.task_id !== payload.task_id)
+        return updatedTasks
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const broadcastSub = useChannel('submissions:lobby', onChannelMessageSubmission)

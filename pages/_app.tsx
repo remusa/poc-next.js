@@ -3,6 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+import * as React from 'react'
 
 import createEmotionCache from '../src/createEmotionCache'
 import theme from '../src/theme'
@@ -20,6 +21,18 @@ interface MyAppProps extends AppProps {
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+  // NOTE: disable SSR to fix React 18 hydration error
+  // https://stackoverflow.com/questions/71706064/react-18-hydration-failed-because-the-initial-ui-does-not-match-what-was-render
+  const [showChild, setShowChild] = React.useState(false)
+  React.useEffect(() => {
+    setShowChild(true)
+  }, [])
+  if (!showChild) {
+    return null
+  }
+  if (typeof window === 'undefined') {
+    return <></>
+  }
   return (
     <CacheProvider value={emotionCache}>
       <Head>
