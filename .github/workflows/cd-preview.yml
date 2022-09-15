@@ -6,6 +6,8 @@ on:
   push:
     branches-ignore:
       - master
+env:
+  NEXT_TELEMETRY_DISABLED: 1
 jobs:
   Deploy-Preview:
     runs-on: ubuntu-latest
